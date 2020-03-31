@@ -9,9 +9,17 @@ import java.net.UnknownHostException;
 
 public class Hermes {
 
-	final static String DefaultIP="igtnet-w.ddns.net";
-	final static int DefaultPort=757;
+	final static String DEFAULT_IP="igtnet-w.ddns.net";
+	final static int DEFAULT_PORT=757;
 
+	/**
+	 * Sends a ServerCommand to a SmokeSignal server
+	 * @param ClientMSG Message to Send
+	 * @param DebugMode Debug Mode (which shows the bynary writer receiving the string)
+	 * @param ServerIP IP of the server u want to send to
+	 * @param Port Port of the server u want to send to
+	 * @return A reply from the server
+	 */
 	public static String ServerCommand(String ClientMSG, boolean DebugMode, String ServerIP,int Port) {
 		//This is all encapsulated in a try, just in case.
 		try {
@@ -58,12 +66,24 @@ public class Hermes {
 			theSocket.close();
 			return ReturnMSG;
 		}
-		catch (UnknownHostException e) {System.out.println("haha silly I couldn't find that host"); e.printStackTrace();}
-		catch (ConnectException e) {System.out.println("Woops, the I could not connect"); e.printStackTrace();}
-		catch (IOException e) {e.printStackTrace();}
+		catch (UnknownHostException e) {System.out.println("haha silly I couldn't find that host"); e.printStackTrace();} //Couldn't find the host
+		catch (ConnectException e) {System.out.println("Woops, the I could not connect"); e.printStackTrace();} //Couldn't connect to the host
+		catch (IOException e) {e.printStackTrace();} //Unrelated IO exception
 		//If anything happens for whatever reason, return E
 		return "E";}
 
-	public static String ServerCommand(String ClientMSG) {return ServerCommand(ClientMSG,false,DefaultIP,DefaultPort);}
-	public static String ServerCommand(String ClientMSG,boolean DebugMode) {return ServerCommand(ClientMSG,DebugMode,DefaultIP,DefaultPort);}
+	/**
+	 * Sends a ServerCommand to the SmokeSignal server that's listenning on the default IP and Port
+	 * @param ClientMSG Message to Send
+	 * @return A reply from the server
+	 */
+	public static String ServerCommand(String ClientMSG) {return ServerCommand(ClientMSG,false,DEFAULT_IP,DEFAULT_PORT);}
+	
+	/**
+	 * Sends a ServerCommand to the SmokeSignal server that's listenning on the default IP and Port
+	 * @param ClientMSG Message to Send
+	 * @param DebugMode Enable or Disable Debug Mode (Which shows the bynary writer doing it's work.
+	 * @return A reply from the server
+	 */
+	public static String ServerCommand(String ClientMSG,boolean DebugMode) {return ServerCommand(ClientMSG,DebugMode,DEFAULT_IP,DEFAULT_PORT);}
 }
